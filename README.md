@@ -16,6 +16,8 @@ license: apache-2.0
 **License:** Apache 2.0  
 **Color Scheme:** Red → Indigo  
 
+## on hugging face <a href="https://huggingface.co/spaces/sudo-soldier/PYTR">PYTR</a><br />
+
 ## Run Locally  
 
 ```
