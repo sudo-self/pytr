@@ -92,40 +92,48 @@
     }
 
     async function processRingtone() {
-      const urlInput = document.getElementById("youtube-url").value;
-      const androidLink = document.getElementById("android-ringtone");
-      const iphoneLink = document.getElementById("iphone-ringtone");
-      const status = document.getElementById("status");
-      const container = document.getElementById("ringtone-container");
+  const urlInput = document.getElementById("youtube-url").value;
+  const androidLink = document.getElementById("android-ringtone");
+  const iphoneLink = document.getElementById("iphone-ringtone");
+  const status = document.getElementById("status");
+  const container = document.getElementById("ringtone-container");
 
-      if (!urlInput) {
-        status.innerText = "❌ Please enter a YouTube URL!";
-        return;
-      }
+  if (!urlInput) {
+    status.innerText = "❌ Please enter a YouTube URL!";
+    return;
+  }
 
-      try {
-        status.innerText = "⏳ Processing...";
-        container.classList.add("glow-border");
+  try {
+    status.innerText = "⏳ Processing...";
+    container.classList.remove("soft-border");
+    container.classList.add("glow-border");
 
-        const client = await import("https://cdn.jsdelivr.net/npm/@gradio/client/+esm").then((m) => m.Client);
-        const connectedClient = await client.connect("sudo-soldier/PYTR");
-        const result = await connectedClient.predict("/predict", [urlInput]);
+    const client = await import("https://cdn.jsdelivr.net/npm/@gradio/client/+esm").then((m) => m.Client);
+    const connectedClient = await client.connect("sudo-soldier/PYTR");
+    const result = await connectedClient.predict("/predict", [urlInput]);
 
-        if (result && result.length >= 2) {
-          androidLink.href = result[0];
-          androidLink.style.display = "block";
-          iphoneLink.href = result[1];
-          iphoneLink.style.display = "block";
-          status.innerText = "💥 JesseJesse.xyz";
-          incrementRingtoneCount();
-        } else {
-          status.innerText = "❌ Failed to generate ringtone.";
-        }
-      } catch (error) {
-        console.error(error);
-        status.innerText = "❌ Error processing ringtone.";
-      }
+    if (result && result.length >= 2) {
+      androidLink.href = result[0];
+      androidLink.style.display = "block";
+      iphoneLink.href = result[1];
+      iphoneLink.style.display = "block";
+      status.innerText = "💥 JesseJesse.xyz";
+      incrementRingtoneCount();
+    } else {
+      status.innerText = "❌ Failed to generate ringtone.";
     }
+  } catch (error) {
+    console.error(error);
+    status.innerText = "❌ Error processing ringtone.";
+  } finally {
+    // Restore soft border after processing
+    setTimeout(() => {
+      container.classList.remove("glow-border");
+      container.classList.add("soft-border");
+    }, 2000);
+  }
+}
+
 
     async function incrementRingtoneCount() {
       try {
