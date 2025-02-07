@@ -173,18 +173,21 @@
   
           const [mp3Url, m4rUrl] = result.data || [];
 
-          if (mp3Url) {
-            androidLink.href = mp3Url;
-            androidLink.download = "android_ringtone.mp3";
-            androidLink.style.display = "block";  
-          }
+        if (mp3Url) {
+  androidLink.href = mp3Url;
+  androidLink.download = "android_ringtone.mp3";
+  androidLink.style.display = "block";
+  console.log("Android ringtone URL set: ", mp3Url); // Debugging line
+}
 
-          if (m4rUrl) {
-            iphoneLink.href = m4rUrl;
-            iphoneLink.download = "iphone_ringtone.m4r";
-            iphoneLink.setAttribute("type", "audio/x-m4r"); 
-            iphoneLink.style.display = "block"; 
-          }
+if (m4rUrl) {
+  iphoneLink.href = m4rUrl;
+  iphoneLink.download = "iphone_ringtone.m4r";
+  iphoneLink.setAttribute("type", "audio/x-m4r");
+  iphoneLink.style.display = "block";
+  console.log("iPhone ringtone URL set: ", m4rUrl); // Debugging line
+}
+
 
           status.innerText = "Ringtones Ready!";
           incrementRingtoneCount(); // Increment ringtone count
