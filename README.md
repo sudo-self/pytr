@@ -1,5 +1,5 @@
 ---
-title: PYT
+title: PYTR
 emoji: 🎵
 colorFrom: red
 colorTo: indigo
@@ -10,7 +10,7 @@ pinned: false
 license: apache-2.0
 ---
 
-# PYT 🎵
+# PYTR 🎵
 
 **Framework:** Gradio (v5.15.0)  
 **License:** Apache 2.0  
