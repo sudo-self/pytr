@@ -71,10 +71,7 @@
           placeholder="Enter YouTube URL"
           class="flex-1 p-2 border border-gray-700 rounded bg-gray-700 text-white"
         />
-        <button
-          onclick="pasteClipboard()"
-          class="bg-gray-600 hover:bg-gray-500 px-3 py-2 rounded"
-        >
+        <button onclick="pasteClipboard()" class="bg-gray-600 hover:bg-gray-500 px-3 py-2 rounded">
           &#9998;
         </button>
       </div>
@@ -86,10 +83,7 @@
         class="w-full p-2 mt-4 border border-gray-700 rounded bg-gray-700 text-white"
       />
 
-      <button
-        onclick="processRingtone()"
-        class="w-full bg-indigo-700 hover:bg-green-800 text-white py-2 px-4 rounded mt-4"
-      >
+      <button onclick="processRingtone()" class="w-full bg-indigo-700 hover:bg-green-800 text-white py-2 px-4 rounded mt-4">
         Generate Ringtones
       </button>
 
@@ -111,16 +105,13 @@
       >
     </div>
 
-    <footer
-      class="mt-6 text-green-600 text-sm text-center cursor-pointer"
-      onclick="sharePage()"
-    >
+    <footer class="mt-6 text-green-600 text-sm text-center cursor-pointer" onclick="sharePage()">
       JesseJesse.xyz
     </footer>
     <br />
-    <span class="inline-block ml-2 text-sm text-center cursor-pointer"
-      >&#9757;&nbsp;share</span
-    >
+    <span class="inline-block ml-2 text-sm text-center cursor-pointer">
+      &#9757;&nbsp;share
+    </span>
 
     <script>
       const REDIS_URL = "https://amused-walleye-31373.upstash.io";
@@ -159,47 +150,46 @@
         const status = document.getElementById("status");
 
         if (!urlInput && !fileInput) {
-          status.innerText =
-            "❌ Please enter a YouTube URL or upload an MP3 file!";
+          status.innerText = "❌ Please enter a YouTube URL or upload an MP3 file!";
           return;
         }
 
         try {
           status.innerText = "⏳ one moment please...";
-          const client = await import(
-            "https://cdn.jsdelivr.net/npm/@gradio/client/+esm"
-          ).then((m) => m.Client);
-          const connectedClient = await client.connect("sudo-soldier/PYTR");
 
+          // Import Gradio client
+          const { Client } = await import("https://cdn.jsdelivr.net/npm/@gradio/client/+esm");
+          const client = await Client.connect("sudo-soldier/PYTR");
+
+          // Prepare the input data for the API call
           const inputData = {
-            url: urlInput || "Hello!!",
-            uploaded_file: fileInput || null,
+            url: urlInput || "Hello!!",  // Use provided YouTube URL, or default to "Hello!!"
+            uploaded_file: fileInput || null,  // Use uploaded MP3 file, if any
           };
-          const result = await connectedClient.predict(
-            "/process_youtube_url",
-            inputData,
-          );
 
-          const androidFile = result.data[0]?.url || result.data[0]?.path;
-          const iphoneFile = result.data[1]?.url || result.data[1]?.path;
+          // Call the Gradio API
+          const result = await client.predict("/process_youtube_url", inputData);
 
-          if (androidFile) {
-            androidLink.href = androidFile;
+          // Assuming result returns URLs like [mp3_url, m4r_url]
+          const [mp3Url, m4rUrl] = result.data || [];
+
+          if (mp3Url) {
+            androidLink.href = mp3Url;
             androidLink.download = "android_ringtone.mp3";
-            androidLink.style.display = "block";
+            androidLink.style.display = "block";  // Show the Android download link
           }
 
-          if (iphoneFile) {
-            iphoneLink.href = iphoneFile;
+          if (m4rUrl) {
+            iphoneLink.href = m4rUrl;
             iphoneLink.download = "iphone_ringtone.m4r";
-            iphoneLink.style.display = "block";
+            iphoneLink.style.display = "block";  // Show the iPhone download link
           }
 
           status.innerText = "Ringtones Ready!";
-          incrementRingtoneCount(); //count
+          incrementRingtoneCount(); // Increment ringtone count
         } catch (error) {
-          console.error(error);
-          status.innerText = "Error processing request!";
+          console.error("Error processing the request:", error);
+          status.innerText = "❌ Error processing request!";
         }
       }
 
@@ -227,8 +217,6 @@
     </script>
   </body>
 </html>
-
-
 
 
 
