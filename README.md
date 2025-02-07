@@ -10,5 +10,24 @@ pinned: false
 license: apache-2.0
 ---
 
-clone this repo to run locally:<br>
-<code>git clone https://huggingface.co/spaces/sudo-soldier/PYTR</code>
+# PYT 🎵
+
+**Framework:** Gradio (v5.15.0)  
+**License:** Apache 2.0  
+**Color Scheme:** Red → Indigo  
+
+## Run Locally  
+
+```
+git clone https://huggingface.co/spaces/sudo-soldier/PYTR
+```
+
+## Embed the space
+```
+<iframe 
+  src="https://sudo-soldier-pytr.hf.space" 
+  frameborder="0" 
+  width="850" 
+  height="450">
+</iframe>
+```
