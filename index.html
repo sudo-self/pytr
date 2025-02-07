@@ -1,61 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PYTR</title>
-    <meta name="title" content="Python YouTube Ringtones" />
-    <meta
-      name="description"
-      content="Generate custom ringtones from YouTube videos with one click! Python YouTube Ringtones lets you convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. No software required – fast, free, and online!"
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://ringtones.jessejesse.xyz" />
-    <meta property="og:title" content="Python YouTube Ringtones" />
-    <meta
-      property="og:description"
-      content="Generate custom ringtones from YouTube videos with one click! Python YouTube Ringtones lets you convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. No software required – fast, free, and online!"
-    />
-    <meta
-      property="og:image"
-      content="https://ringtones.jessejesse.xyz/og.png"
-    />
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://ringtones.jessejesse.xyz" />
-    <meta property="twitter:title" content="Python YouTube Ringtones" />
-    <meta
-      property="twitter:description"
-      content="Generate custom ringtones from YouTube videos with one click! Python YouTube Ringtones lets you convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. No software required – fast, free, and online!"
-    />
-    <meta
-      property="twitter:image"
-      content="https://ringtones.jessejesse.xyz/og.png"
-    />
-    <meta name="author" content="JesseJesse.xyz" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        updateRingtoneCount();
-      });
-    </script>
-    <style>
-      @keyframes glow {
-        0% {
-          border-color: #4f46e5;
-        }
-        50% {
-          border-color: #fbbf24;
-        }
-        100% {
-          border-color: #4f46e5;
-        }
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PYTR</title>
+  <meta name="title" content="Python YouTube Ringtones" />
+  <meta name="description" content="Generate custom ringtones from YouTube videos with one click! Python YouTube Ringtones lets you convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. No software required – fast, free, and online!" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ringtones.jessejesse.xyz" />
+  <meta property="og:title" content="Python YouTube Ringtones" />
+  <meta property="og:description" content="Generate custom ringtones from YouTube videos with one click! Python YouTube Ringtones lets you convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. No software required – fast, free, and online!" />
+  <meta property="og:image" content="https://ringtones.jessejesse.xyz/og.png" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://ringtones.jessejesse.xyz" />
+  <meta property="twitter:title" content="Python YouTube Ringtones" />
+  <meta property="twitter:description" content="Generate custom ringtones from YouTube videos with one click! Python YouTube Ringtones lets you convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. No software required – fast, free, and online!" />
+  <meta property="twitter:image" content="https://ringtones.jessejesse.xyz/og.png" />
+  <meta name="author" content="JesseJesse.xyz" />
 
-      .glow-border {
-        animation: glow 1.5s ease-in-out infinite;
+  <!-- Web App Manifest -->
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="16x16 32x32" />
+  <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
+  <link rel="icon" href="/icon-512.png" type="image/png" sizes="512x512" />
+  <link rel="icon" href="/icon-192-maskable.png" type="image/png" sizes="192x192" purpose="maskable" />
+  <link rel="icon" href="/icon-512-maskable.png" type="image/png" sizes="512x512" purpose="maskable" />
+
+  <!-- Theme Colors -->
+  <meta name="theme-color" content="#1a1a2e" />
+
+  <!-- App Manifest Settings -->
+  <meta name="application-name" content="Python YouTube Ringtones" />
+  <meta name="short_name" content="YT Ringtones" />
+  <meta name="description" content="Generate custom ringtones from YouTube videos with one click! Python YouTube Ringtones lets you convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. No software required – fast, free, and online!" />
+  <meta name="start_url" content="/" />
+  <meta name="display" content="standalone" />
+  <meta name="background_color" content="#111827" />
+  <meta name="orientation" content="portrait" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      updateRingtoneCount();
+    });
+  </script>
+
+  <style>
+    @keyframes glow {
+      0% {
+        border-color: #4f46e5;
       }
-    </style>
-  </head>
+      50% {
+        border-color: #fbbf24;
+      }
+      100% {
+        border-color: #4f46e5;
+      }
+    }
+
+    .glow-border {
+      animation: glow 1.5s ease-in-out infinite;
+    }
+  </style>
+</head>
+
   <body
     style="
       background: linear-gradient(to bottom right, #1f2937, #374151, #111827);
