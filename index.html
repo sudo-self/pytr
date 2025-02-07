@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Python YouTube Ringtones</title>
+    <title>PYTR</title>
     <meta name="title" content="Python YouTube Ringtones" />
     <meta name="description" content="Generate custom ringtones from YouTube videos with one click! Python YouTube Ringtones lets you convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. No software required – fast, free, and online!" />
     <meta property="og:type" content="website" />
@@ -23,6 +23,23 @@
         updateRingtoneCount();
       });
     </script>
+    <style>
+      @keyframes glow {
+        0% {
+          border-color: #4f46e5;
+        }
+        50% {
+          border-color: #fbbf24;
+        }
+        100% {
+          border-color: #4f46e5;
+        }
+      }
+
+      .glow-border {
+        animation: glow 1.5s ease-in-out infinite;
+      }
+    </style>
   </head>
   <body style="background: linear-gradient(to bottom right, #1f2937, #374151, #111827); color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0;">
     <div id="ringtone-container" style="width: 100%; max-width: 400px; background: transparent; border: 2px solid transparent; border-radius: 8px; padding: 24px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center;">
@@ -71,10 +88,13 @@
         const androidLink = document.getElementById("android-ringtone");
         const iphoneLink = document.getElementById("iphone-ringtone");
         const status = document.getElementById("status");
+        const ringtoneContainer = document.getElementById("ringtone-container");
+
         if (!urlInput) {
           status.innerText = "❌ Please enter a YouTube URL!";
           return;
         }
+
         try {
           status.innerText = "⏳ one moment please...";
           const client = await import("https://cdn.jsdelivr.net/npm/@gradio/client/+esm").then((m) => m.Client);
@@ -85,6 +105,7 @@
           });
           const androidFile = result.data[0]?.url || result.data[0]?.path;
           const iphoneFile = result.data[1]?.url || result.data[1]?.path;
+
           if (androidFile) {
             androidLink.href = androidFile;
             androidLink.download = "android_ringtone.mp3";
@@ -96,6 +117,7 @@
             iphoneLink.style.display = "block";
           }
           status.innerText = "Ringtones Available";
+          ringtoneContainer.classList.add("glow-border");
           incrementRingtoneCount();
         } catch (error) {
           console.error(error);
@@ -114,6 +136,7 @@
     </script>
   </body>
 </html>
+
 
 
 
