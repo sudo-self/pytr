@@ -33,19 +33,22 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
+    /* Gradient Background */
     body {
-  background: linear-gradient(135deg, #1a1a2e, #111827);
-}
+      background: linear-gradient(135deg, #1a1a2e, #111827);
+    }
 
+    /* Default soft grey border */
+    .soft-border {
+      border: 2px solid #9ca3af;
+      transition: border 0.3s ease-in-out;
+    }
+
+    /* Flashing border when processing */
     @keyframes glow {
       0% { border-color: #4f46e5; }
       50% { border-color: #fbbf24; }
       100% { border-color: #4f46e5; }
-    }
-
-    .soft-border {
-      border: 2px solid #9ca3af;
-      transition: border 0.3s ease-in-out;
     }
 
     .glow-border {
@@ -53,13 +56,13 @@
     }
   </style>
 </head>
-<body class="bg-gray-900 text-white flex flex-col justify-center items-center h-screen">
+<body class="text-white flex flex-col justify-center items-center h-screen">
 
   <div id="ringtone-container" class="w-full max-w-md bg-gray-800 soft-border rounded-lg p-6 text-center shadow-md">
     <img src="icon.png" alt="App Icon" class="w-28 h-28 mx-auto mb-4">
     <h1 class="text-xl font-bold">Python YouTube Ringtones</h1>
     
-    <p class="mt-4 text-yellow-400">PYTRR ♪♬♪♬<span id="ringtone-count">0</span></p>
+    <p class="mt-4 text-yellow-400">Ringtones ♪♬♪♬:&nbsp;<span id="ringtone-count">0</span></p>
 
     <div class="flex gap-2 mt-4">
       <input id="youtube-url" type="text" placeholder="Enter YouTube URL"
@@ -96,48 +99,40 @@
     }
 
     async function processRingtone() {
-  const urlInput = document.getElementById("youtube-url").value;
-  const androidLink = document.getElementById("android-ringtone");
-  const iphoneLink = document.getElementById("iphone-ringtone");
-  const status = document.getElementById("status");
-  const container = document.getElementById("ringtone-container");
+      const urlInput = document.getElementById("youtube-url").value;
+      const androidLink = document.getElementById("android-ringtone");
+      const iphoneLink = document.getElementById("iphone-ringtone");
+      const status = document.getElementById("status");
+      const container = document.getElementById("ringtone-container");
 
-  if (!urlInput) {
-    status.innerText = "❌ Please enter a YouTube URL!";
-    return;
-  }
+      if (!urlInput) {
+        status.innerText = "❌ Please enter a YouTube URL!";
+        return;
+      }
 
-  try {
-    status.innerText = "⏳ Processing...";
-    container.classList.remove("soft-border");
-    container.classList.add("glow-border");
+      try {
+        status.innerText = "⏳ Processing...";
+        container.classList.add("glow-border");
 
-    const client = await import("https://cdn.jsdelivr.net/npm/@gradio/client/+esm").then((m) => m.Client);
-    const connectedClient = await client.connect("sudo-soldier/PYTR");
-    const result = await connectedClient.predict("/predict", [urlInput]);
+        const client = await import("https://cdn.jsdelivr.net/npm/@gradio/client/+esm").then((m) => m.Client);
+        const connectedClient = await client.connect("sudo-soldier/PYTR");
+        const result = await connectedClient.predict("/predict", [urlInput]);
 
-    if (result && result.length >= 2) {
-      androidLink.href = result[0];
-      androidLink.style.display = "block";
-      iphoneLink.href = result[1];
-      iphoneLink.style.display = "block";
-      status.innerText = "💥 JesseJesse.xyz";
-      incrementRingtoneCount();
-    } else {
-      status.innerText = "❌ Failed to generate ringtone.";
+        if (result && result.length >= 2) {
+          androidLink.href = result[0];
+          androidLink.style.display = "block";
+          iphoneLink.href = result[1];
+          iphoneLink.style.display = "block";
+          status.innerText = "💥 JesseJesse.xyz";
+          incrementRingtoneCount();
+        } else {
+          status.innerText = "❌ Failed to generate ringtone.";
+        }
+      } catch (error) {
+        console.error(error);
+        status.innerText = "❌ Error processing ringtone.";
+      }
     }
-  } catch (error) {
-    console.error(error);
-    status.innerText = "❌ Error processing ringtone.";
-  } finally {
-    // Restore soft border after processing
-    setTimeout(() => {
-      container.classList.remove("glow-border");
-      container.classList.add("soft-border");
-    }, 2000);
-  }
-}
-
 
     async function incrementRingtoneCount() {
       try {
@@ -159,6 +154,7 @@
 
 </body>
 </html>
+
 
 
 
