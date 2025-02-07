@@ -136,7 +136,7 @@
           await fetch(`${REDIS_URL}/incr/ringtone_count`, {
             headers: { Authorization: `Bearer ${REDIS_TOKEN}` },
           });
-          updateRingtoneCount(); //count
+          updateRingtoneCount(); // Update count
         } catch (error) {
           console.error("Error updating ringtone count:", error);
         }
@@ -217,6 +217,7 @@
     </script>
   </body>
 </html>
+
 
 
 
