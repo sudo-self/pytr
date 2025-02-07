@@ -101,7 +101,7 @@
           const connectedClient = await client.connect("sudo-soldier/PYTR");
           const result = await connectedClient.predict("/process_youtube_or_audio", {
             url: urlInput,
-            recorded_audio: null // You can add audio if needed
+            recorded_audio: null 
           });
           const androidFile = result.data[0]?.url || result.data[0]?.path;
           const iphoneFile = result.data[1]?.url || result.data[1]?.path;
@@ -116,7 +116,7 @@
             iphoneLink.download = "iphone_ringtone.m4r";
             iphoneLink.style.display = "block";
           }
-          status.innerText = "Ringtones Available";
+          status.innerText = "ringtones.JesseJesse.xyz";
           ringtoneContainer.classList.add("glow-border");
           incrementRingtoneCount();
         } catch (error) {
