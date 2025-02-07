@@ -116,7 +116,7 @@
             iphoneLink.download = "iphone_ringtone.m4r";
             iphoneLink.style.display = "block";
           }
-          status.innerText = "ringtones.JesseJesse.xyz";
+          status.innerText = "JesseJesse.xyz";
           ringtoneContainer.classList.add("glow-border");
           incrementRingtoneCount();
         } catch (error) {
@@ -130,7 +130,7 @@
           const text = await navigator.clipboard.readText();
           document.getElementById("youtube-url").value = text;
         } catch (error) {
-          alert("Clipboard access denied! Please paste manually.");
+          alert("Please add the song URL.");
         }
       }
     </script>
