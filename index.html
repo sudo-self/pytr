@@ -4,9 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Python YouTube Ringtones</title>
-    <meta name="description" content="Generate custom ringtones from YouTube videos with one click! Convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. Fast, free, and online!" />
+    <meta name="title" content="Python YouTube Ringtones" />
+    <meta name="description" content="Generate custom ringtones from YouTube videos with one click! Python YouTube Ringtones lets you convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. No software required – fast, free, and online!" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ringtones.jessejesse.xyz" />
+    <meta property="og:title" content="Python YouTube Ringtones" />
+    <meta property="og:description" content="Generate custom ringtones from YouTube videos with one click! Python YouTube Ringtones lets you convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. No software required – fast, free, and online!" />
     <meta property="og:image" content="https://ringtones.jessejesse.xyz/og.png" />
     <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://ringtones.jessejesse.xyz" />
+    <meta property="twitter:title" content="Python YouTube Ringtones" />
+    <meta property="twitter:description" content="Generate custom ringtones from YouTube videos with one click! Python YouTube Ringtones lets you convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. No software required – fast, free, and online!" />
+    <meta property="twitter:image" content="https://ringtones.jessejesse.xyz/og.png" />
     <meta name="author" content="JesseJesse.xyz" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -15,26 +24,25 @@
       });
     </script>
   </head>
-  <body class="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white flex flex-col justify-center items-center h-screen">
-    <div id="ringtone-container" class="w-full max-w-md bg-transparent border border-gray-700 p-6 rounded-lg shadow-lg text-center">
-      <img src="icon.png" alt="App Icon" class="w-20 h-20 mx-auto mb-4" />
-      <h1 class="text-xl font-bold mb-4">Python YouTube Ringtones</h1>
-      <p class="mt-4 text-center text-yellow-400">♪♬♪♬&nbsp;&nbsp;<span id="ringtone-count">0</span>♪♬♪♬</p>
+  <body style="background: linear-gradient(to bottom right, #1f2937, #374151, #111827); color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+    <div id="ringtone-container" style="width: 100%; max-width: 400px; background: transparent; border: 2px solid transparent; border-radius: 8px; padding: 24px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center;">
+      <img src="icon.png" alt="App Icon" style="width: 80px; height: 80px; margin-bottom: 16px;" />
+      <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 16px;">Python YouTube Ringtones</h1>
+      <p style="margin-top: 16px; text-align: center; color: #fbbf24;">♪♬♪♬&nbsp;<span id="ringtone-count">0</span>&nbsp;♪♬♪♬ </p>
       <br />
-      <div class="flex gap-2">
-        <input id="youtube-url" type="text" placeholder="Enter YouTube URL" class="flex-1 p-2 border border-gray-700 rounded bg-gray-700 text-white" />
-        <button onclick="pasteClipboard()" class="bg-gray-600 hover:bg-gray-500 px-3 py-2 rounded">&#9998;</button>
+      <div style="display: flex; gap: 8px;">
+        <input id="youtube-url" type="text" placeholder="Enter YouTube URL" style="flex-grow: 1; padding: 8px; border: 1px solid #4b5563; border-radius: 4px; background-color: #374151; color: white;" />
+        <button onclick="pasteClipboard()" style="background-color: #6b7280; color: white; padding: 8px 12px; border-radius: 4px;">&#9998;</button>
       </div>
-      <button onclick="processRingtone()" class="w-full bg-indigo-700 hover:bg-green-800 text-white py-2 px-4 rounded mt-4">Generate Ringtones</button>
-      <p id="status" class="text-center mt-4 text-yellow-400"></p>
-      <a id="android-ringtone" href="#" download class="hidden block mt-4 text-center text-blue-300">⬇ Android Ringtone</a>
-      <a id="iphone-ringtone" href="#" download class="hidden block mt-4 text-center text-blue-300">⬇ iPhone Ringtone</a>
+      <button onclick="processRingtone()" style="width: 100%; background-color: #4f46e5; color: white; padding: 12px 16px; border-radius: 4px; margin-top: 16px;">Generate Ringtones</button>
+      <p id="status" style="text-align: center; margin-top: 16px; color: #fbbf24;"></p>
+      <a id="android-ringtone" href="#" download style="display: none; margin-top: 16px; color: #3b82f6; text-decoration: none;">⬇ Android Ringtone</a>
+      <a id="iphone-ringtone" href="#" download style="display: none; margin-top: 16px; color: #3b82f6; text-decoration: none;">⬇ iPhone Ringtone</a>
     </div>
-
     <script>
       const REDIS_URL = "https://amused-walleye-31373.upstash.io";
       const REDIS_TOKEN = "AXqNASQgMWZmMTdjYTEtNTJjYi00MDczLWJmZDctNjFjZGUyOTA0ZjEyNjcyMTI0NDM2MDBjNDVmZmE5NjJlMTllYTkyMDI2MDU=";
-      
+
       async function updateRingtoneCount() {
         try {
           const response = await fetch(`${REDIS_URL}/get/ringtone_count`, {
@@ -63,31 +71,17 @@
         const androidLink = document.getElementById("android-ringtone");
         const iphoneLink = document.getElementById("iphone-ringtone");
         const status = document.getElementById("status");
-
         if (!urlInput) {
           status.innerText = "❌ Please enter a YouTube URL!";
           return;
         }
-
         try {
-          status.innerText = "⏳ Processing... Please wait...";
-          const { Client } = await import("https://cdn.jsdelivr.net/npm/@gradio/client/+esm");
-          const connectedClient = await Client.connect("sudo-soldier/PYTR");
-
-          // Debugging: View available API functions
-          const availableFunctions = await connectedClient.view_api();
-          console.log("Available API functions:", availableFunctions);
-
-          // Assuming function index 0 is correct
-          const result = await connectedClient.predict(0, [urlInput]);
-
-          if (!result || !result.data || result.data.length < 2) {
-            throw new Error("Invalid response from server");
-          }
-
+          status.innerText = "⏳ one moment please...";
+          const client = await import("https://cdn.jsdelivr.net/npm/@gradio/client/+esm").then((m) => m.Client);
+          const connectedClient = await client.connect("sudo-soldier/PYTR");
+          const result = await connectedClient.predict("/process_youtube_url", { url: urlInput });
           const androidFile = result.data[0]?.url || result.data[0]?.path;
           const iphoneFile = result.data[1]?.url || result.data[1]?.path;
-
           if (androidFile) {
             androidLink.href = androidFile;
             androidLink.download = "android_ringtone.mp3";
@@ -98,12 +92,11 @@
             iphoneLink.download = "iphone_ringtone.m4r";
             iphoneLink.style.display = "block";
           }
-
-          status.innerText = "✅ Ringtones Available!";
+          status.innerText = "Ringtones Available";
           incrementRingtoneCount();
         } catch (error) {
-          console.error("Error processing ringtone:", error);
-          status.innerText = "❌ Error processing request!";
+          console.error(error);
+          status.innerText = "Error processing request!";
         }
       }
 
