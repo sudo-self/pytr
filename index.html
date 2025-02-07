@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Python YouTube Ringtones</title>
     <meta name="title" content="Python YouTube Ringtones" />
     <meta
@@ -38,7 +37,6 @@
       body {
         background: linear-gradient(135deg, #1a1a2e, #111827, #0f0f14);
         color: white;
-        visibility: hidden;
       }
     </style>
 
@@ -46,7 +44,6 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        document.body.style.visibility = "visible";
         updateRingtoneCount(); // Fetch count on page load
       });
     </script>
@@ -170,24 +167,22 @@
           // Call the Gradio API
           const result = await client.predict("/process_youtube_url", inputData);
 
-  
           const [mp3Url, m4rUrl] = result.data || [];
 
-        if (mp3Url) {
-  androidLink.href = mp3Url;
-  androidLink.download = "android_ringtone.mp3";
-  androidLink.style.display = "block";
-  console.log("Android ringtone URL set: ", mp3Url); // Debugging line
-}
+          if (mp3Url) {
+            androidLink.href = mp3Url;
+            androidLink.download = "android_ringtone.mp3";
+            androidLink.style.display = "block";
+            console.log("Android ringtone URL set: ", mp3Url); // Debugging line
+          }
 
-if (m4rUrl) {
-  iphoneLink.href = m4rUrl;
-  iphoneLink.download = "iphone_ringtone.m4r";
-  iphoneLink.setAttribute("type", "audio/x-m4r");
-  iphoneLink.style.display = "block";
-  console.log("iPhone ringtone URL set: ", m4rUrl); // Debugging line
-}
-
+          if (m4rUrl) {
+            iphoneLink.href = m4rUrl;
+            iphoneLink.download = "iphone_ringtone.m4r";
+            iphoneLink.setAttribute("type", "audio/x-m4r");
+            iphoneLink.style.display = "block";
+            console.log("iPhone ringtone URL set: ", m4rUrl); // Debugging line
+          }
 
           status.innerText = "Ringtones Ready!";
           incrementRingtoneCount(); // Increment ringtone count
@@ -221,7 +216,6 @@ if (m4rUrl) {
     </script>
   </body>
 </html>
-
 
 
 
