@@ -1,32 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>P.Y.T.R. - YouTube Ringtones</title>
-
-    <link rel="shortcut icon" href="favicon.ico" />
-    <link
-      rel="icon"
-      type="image/x-icon"
-      sizes="16x16 32x32"
-      href="favicon.ico"
-    />
-    <link rel="apple-touch-icon" sizes="any" href="apple-touch-icon.png" />
-    <link rel="manifest" href="manifest.json" />
-    <link rel="icon" sizes="192x192" href="favicon.png" />
-
-    <meta name="theme-color" content="#000000" />
-    <meta name="msapplication-TileColor" content="#000000" />
-    <meta name="msapplication-TileImage" content="favicon.png" />
-
-    <title>PYTR</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YT Ringtone Generator</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-900 text-white flex justify-center items-center h-screen">
-    <div class="w-full max-w-md bg-gray-800 p-6 rounded-lg shadow-lg">
-        <h1 class="text-xl font-bold mb-4 text-center">Python YouTube Ringtones</h1>
+<body class="bg-gray-900 text-white flex flex-col justify-center items-center h-screen">
+    <div class="w-full max-w-md bg-gray-800 p-6 rounded-lg shadow-lg text-center">
+        <!-- Icon -->
+        <img src="icon.png" alt="App Icon" class="w-16 h-16 mx-auto mb-4">
+
+        <h1 class="text-xl font-bold mb-4">Python YouTube Ringtones</h1>
 
         <div class="flex gap-2">
             <input id="youtube-url" type="text" placeholder="Enter YouTube URL"
@@ -41,15 +26,20 @@
                class="w-full p-2 mt-4 border border-gray-700 rounded bg-gray-700 text-white">
 
         <button onclick="processRingtone()"
-                class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mt-4">
+                class="w-full bg-indigo-500 hover:bg-green-600 text-white py-2 px-4 rounded mt-4">
             Generate Ringtones
         </button>
 
         <p id="status" class="text-center mt-4 text-yellow-400"></p>
 
-        <a id="android-ringtone" href="#" download class="hidden block mt-4 text-center text-green-400">⬇ Android Ringtone</a>
-        <a id="iphone-ringtone" href="#" download class="hidden block mt-2 text-center text-green-400">⬇ iPhone Ringtone</a>
+        <a id="android-ringtone" href="#" download class="hidden block mt-4 text-center text-green-400">⬇ Download Android Ringtone</a>
+        <a id="iphone-ringtone" href="#" download class="hidden block mt-2 text-center text-green-400">⬇ Download iPhone Ringtone</a>
     </div>
+
+    <!-- Footer -->
+    <footer class="mt-6 text-green-400 text-sm">
+        ♪♬ ringtones.JesseJesse.xyz ♪♬ 
+    </footer>
 
     <script>
         async function processRingtone() {
