@@ -28,7 +28,7 @@
     <div id="ringtone-container" style="width: 100%; max-width: 400px; background: transparent; border: 2px solid transparent; border-radius: 8px; padding: 24px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center;">
       <img src="icon.png" alt="App Icon" style="width: 80px; height: 80px; margin-bottom: 16px;" />
       <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 16px;">Python YouTube Ringtones</h1>
-      <p style="margin-top: 16px; text-align: center; color: #fbbf24;">♬♪♬&nbsp;&nbsp;<span id="ringtone-count">0</span>&nbsp;&nbsp;♬♪♬</p>
+      <p style="margin-top: 16px; text-align: center; color: #fbbf24;">♪♬♪♬&nbsp;&nbsp; <span id="ringtone-count">0</span></p>
       <br />
       <div style="display: flex; gap: 8px;">
         <input id="youtube-url" type="text" placeholder="Enter YouTube URL" style="flex-grow: 1; padding: 8px; border: 1px solid #4b5563; border-radius: 4px; background-color: #374151; color: white;" />
@@ -79,7 +79,10 @@
           status.innerText = "⏳ one moment please...";
           const client = await import("https://cdn.jsdelivr.net/npm/@gradio/client/+esm").then((m) => m.Client);
           const connectedClient = await client.connect("sudo-soldier/PYTR");
-          const result = await connectedClient.predict("/process_youtube_url", { url: urlInput });
+          const result = await connectedClient.predict("/process_youtube_or_audio", {
+            url: urlInput,
+            recorded_audio: null // You can add audio if needed
+          });
           const androidFile = result.data[0]?.url || result.data[0]?.path;
           const iphoneFile = result.data[1]?.url || result.data[1]?.path;
           if (androidFile) {
@@ -111,6 +114,8 @@
     </script>
   </body>
 </html>
+
+
 
 
 
