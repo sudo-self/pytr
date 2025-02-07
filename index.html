@@ -93,14 +93,14 @@
         id="android-ringtone"
         href="#"
         download
-        class="hidden block mt-4 text-center text-indigo-500"
+        class="hidden block mt-4 text-center text-blue-300"
         >⬇ Android Ringtone</a
       >
       <a
         id="iphone-ringtone"
         href="#"
         download
-        class="hidden block mt-4 text-center text-indigo-500"
+        class="hidden block mt-4 text-center text-blue-300"
         >⬇ iPhone Ringtone</a
       >
     </div>
@@ -163,26 +163,27 @@
 
           // Prepare the input data for the API call
           const inputData = {
-            url: urlInput || "Hello!!",  // Use provided YouTube URL, or default to "Hello!!"
-            uploaded_file: fileInput || null,  // Use uploaded MP3 file, if any
+            url: urlInput || "Hello!!",  
+            uploaded_file: fileInput || null, 
           };
 
           // Call the Gradio API
           const result = await client.predict("/process_youtube_url", inputData);
 
-          // Assuming result returns URLs like [mp3_url, m4r_url]
+  
           const [mp3Url, m4rUrl] = result.data || [];
 
           if (mp3Url) {
             androidLink.href = mp3Url;
             androidLink.download = "android_ringtone.mp3";
-            androidLink.style.display = "block";  // Show the Android download link
+            androidLink.style.display = "block";  
           }
 
           if (m4rUrl) {
             iphoneLink.href = m4rUrl;
             iphoneLink.download = "iphone_ringtone.m4r";
-            iphoneLink.style.display = "block";  // Show the iPhone download link
+            iphoneLink.setAttribute("type", "audio/x-m4r"); 
+            iphoneLink.style.display = "block"; 
           }
 
           status.innerText = "Ringtones Ready!";
@@ -217,6 +218,7 @@
     </script>
   </body>
 </html>
+
 
 
 
