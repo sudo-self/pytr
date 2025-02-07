@@ -10,13 +10,11 @@ pinned: false
 license: apache-2.0
 ---
 
-# PYTR 🎵
+## on hugging face <a href="https://huggingface.co/spaces/sudo-soldier/PYTR">PYTR</a><br />
 
 **Framework:** Gradio (v5.15.0)  
 **License:** Apache 2.0  
-**Color Scheme:** Red → Indigo  
-
-## on hugging face <a href="https://huggingface.co/spaces/sudo-soldier/PYTR">PYTR</a><br />
+  
 
 ## Run Locally  
 
@@ -34,6 +32,7 @@ git clone https://huggingface.co/spaces/sudo-soldier/PYTR
 </iframe>
 ```
 
-<img width="1440" alt="og" src="https://github.com/user-attachments/assets/0857a2be-3237-465e-bf3a-16a6c8991fb9" />
+<img width="1440" alt="Screenshot 2025-02-07 at 10 56 21" src="https://github.com/user-attachments/assets/46ac4811-b978-4829-8bcc-81ea184d5ee4" />
+
 
 
