@@ -19,31 +19,25 @@
     <meta name="author" content="JesseJesse.xyz" />
 
     <style>
-      body {
-        background: linear-gradient(135deg, #1a1a2e, #111827, #0f0f14);
-        color: white;
-        visibility: hidden;
-      }
+    body {
+  background: linear-gradient(135deg, #1a1a2e, #111827, #0f0f14);
+  color: white;
+  visibility: hidden;
+}
 
-      .neon-border {
-        position: relative;
-        border: 2px solid transparent;
-        border-radius: 2px;
-        background-image: linear-gradient(white, white),
-                          radial-gradient(circle closest-side, #ff00ff, #00ffff, #ff00ff);
-        background-origin: border-box;
-        background-clip: content-box, border-box;
-        animation: neon-glow 1.5s ease-in-out infinite alternate;
-      }
+.neon-glow {
+  position: relative;
+  animation: neon-glow 1.5s ease-in-out infinite alternate;
+}
 
-      @keyframes neon-glow {
-        0% {
-          box-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff, 0 0 15px #ff00ff;
-        }
-        100% {
-          box-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 50px #00ffff;
-        }
-      }
+@keyframes neon-glow {
+  0% {
+    box-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff, 0 0 15px #ff00ff;
+  }
+  100% {
+    box-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 50px #00ffff;
+  }
+}
 
     </style>
 
