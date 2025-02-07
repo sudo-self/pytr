@@ -1,18 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-     <script src="https://cdn.tailwindcss.com"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YT Ringtone Generator</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>YT Ringtone Generator</title>
+
+       
+        <style>
+            body {
+                background-color: #111827; 
+                color: white; 
+                visibility: hidden;
+            }
+        </style>
+
    
-</head>
+        <script src="https://cdn.tailwindcss.com"></script>
+
+       
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                document.body.style.visibility = "visible";
+            });
+        </script>
+    </head>
+
 <body class="bg-gray-900 text-white flex flex-col justify-center items-center h-screen">
     <div class="w-full max-w-md bg-gray-800 p-6 rounded-lg shadow-lg text-center">
         <!-- Icon -->
         <img src="icon.png" alt="App Icon" class="w-16 h-16 mx-auto mb-4">
 
-        <h1 class="text-xl font-bold mb-4">♪♬ Python YouTube Ringtones ♪♬</h1>
+        <h1 class="text-xl font-bold mb-4"> ♪♬ Python YouTube Ringtones ♪♬</h1>
 
         <div class="flex gap-2">
             <input id="youtube-url" type="text" placeholder="Enter YouTube URL"
@@ -37,9 +55,9 @@
         <a id="iphone-ringtone" href="#" download class="hidden block mt-2 text-center text-green-400">⬇ Download iPhone Ringtone</a>
     </div>
 
-    <!-- Footer -->
+  
     <footer class="mt-6 text-green-400 text-sm">
-         ringtones.JesseJesse.xyz 
+        ringtones.JesseJesse.xyz
     </footer>
 
     <script>
@@ -97,5 +115,6 @@
     </script>
 </body>
 </html>
+
 
 
