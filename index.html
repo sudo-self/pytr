@@ -4,18 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Python YouTube Ringtones</title>
-    <meta name="title" content="Python YouTube Ringtones" />
-    <meta name="description" content="Generate custom ringtones from YouTube videos with one click! Python YouTube Ringtones lets you convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. No software required – fast, free, and online!" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://ringtones.jessejesse.xyz" />
-    <meta property="og:title" content="Python YouTube Ringtones" />
-    <meta property="og:description" content="Generate custom ringtones from YouTube videos with one click! Python YouTube Ringtones lets you convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. No software required – fast, free, and online!" />
+    <meta name="description" content="Generate custom ringtones from YouTube videos with one click! Convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. Fast, free, and online!" />
     <meta property="og:image" content="https://ringtones.jessejesse.xyz/og.png" />
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://ringtones.jessejesse.xyz" />
-    <meta property="twitter:title" content="Python YouTube Ringtones" />
-    <meta property="twitter:description" content="Generate custom ringtones from YouTube videos with one click! Python YouTube Ringtones lets you convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. No software required – fast, free, and online!" />
-    <meta property="twitter:image" content="https://ringtones.jessejesse.xyz/og.png" />
     <meta name="author" content="JesseJesse.xyz" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -25,10 +16,10 @@
     </script>
   </head>
   <body class="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white flex flex-col justify-center items-center h-screen">
-    <div id="ringtone-container" class="w-full max-w-md bg-transparent border border-gradient-to-br from-pink-300 via-indigo-500 to-yellow p-6 rounded-lg shadow-lg text-center">
+    <div id="ringtone-container" class="w-full max-w-md bg-transparent border border-gray-700 p-6 rounded-lg shadow-lg text-center">
       <img src="icon.png" alt="App Icon" class="w-20 h-20 mx-auto mb-4" />
       <h1 class="text-xl font-bold mb-4">Python YouTube Ringtones</h1>
-      <p class="mt-4 text-center text-yellow-400">♪♬♪♬&nbsp;Tones Made:&nbsp;<span id="ringtone-count">0</span></p>
+      <p class="mt-4 text-center text-yellow-400">♪♬♪♬&nbsp;&nbsp;<span id="ringtone-count">0</span>♪♬♪♬</p>
       <br />
       <div class="flex gap-2">
         <input id="youtube-url" type="text" placeholder="Enter YouTube URL" class="flex-1 p-2 border border-gray-700 rounded bg-gray-700 text-white" />
@@ -39,6 +30,7 @@
       <a id="android-ringtone" href="#" download class="hidden block mt-4 text-center text-blue-300">⬇ Android Ringtone</a>
       <a id="iphone-ringtone" href="#" download class="hidden block mt-4 text-center text-blue-300">⬇ iPhone Ringtone</a>
     </div>
+
     <script>
       const REDIS_URL = "https://amused-walleye-31373.upstash.io";
       const REDIS_TOKEN = "AXqNASQgMWZmMTdjYTEtNTJjYi00MDczLWJmZDctNjFjZGUyOTA0ZjEyNjcyMTI0NDM2MDBjNDVmZmE5NjJlMTllYTkyMDI2MDU=";
@@ -54,7 +46,7 @@
           console.error("Error fetching ringtone count:", error);
         }
       }
-      
+
       async function incrementRingtoneCount() {
         try {
           await fetch(`${REDIS_URL}/incr/ringtone_count`, {
@@ -65,23 +57,37 @@
           console.error("Error updating ringtone count:", error);
         }
       }
-      
+
       async function processRingtone() {
         const urlInput = document.getElementById("youtube-url").value;
         const androidLink = document.getElementById("android-ringtone");
         const iphoneLink = document.getElementById("iphone-ringtone");
         const status = document.getElementById("status");
+
         if (!urlInput) {
           status.innerText = "❌ Please enter a YouTube URL!";
           return;
         }
+
         try {
-          status.innerText = "⏳ one moment please...";
-          const client = await import("https://cdn.jsdelivr.net/npm/@gradio/client/+esm").then((m) => m.Client);
-          const connectedClient = await client.connect("sudo-soldier/PYTR");
-          const result = await connectedClient.predict("/process_youtube_url", { url: urlInput });
+          status.innerText = "⏳ Processing... Please wait...";
+          const { Client } = await import("https://cdn.jsdelivr.net/npm/@gradio/client/+esm");
+          const connectedClient = await Client.connect("sudo-soldier/PYTR");
+
+          // Debugging: View available API functions
+          const availableFunctions = await connectedClient.view_api();
+          console.log("Available API functions:", availableFunctions);
+
+          // Assuming function index 0 is correct
+          const result = await connectedClient.predict(0, [urlInput]);
+
+          if (!result || !result.data || result.data.length < 2) {
+            throw new Error("Invalid response from server");
+          }
+
           const androidFile = result.data[0]?.url || result.data[0]?.path;
           const iphoneFile = result.data[1]?.url || result.data[1]?.path;
+
           if (androidFile) {
             androidLink.href = androidFile;
             androidLink.download = "android_ringtone.mp3";
@@ -92,13 +98,15 @@
             iphoneLink.download = "iphone_ringtone.m4r";
             iphoneLink.style.display = "block";
           }
-          status.innerText = "Ringtones Available";
+
+          status.innerText = "✅ Ringtones Available!";
           incrementRingtoneCount();
         } catch (error) {
-          console.error(error);
-          status.innerText = "Error processing request!";
+          console.error("Error processing ringtone:", error);
+          status.innerText = "❌ Error processing request!";
         }
       }
+
       async function pasteClipboard() {
         try {
           const text = await navigator.clipboard.readText();
@@ -110,6 +118,7 @@
     </script>
   </body>
 </html>
+
 
 
 
