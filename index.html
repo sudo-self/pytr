@@ -222,12 +222,12 @@
         const ringtoneContainer = document.getElementById("ringtone-container");
 
         if (!urlInput) {
-          status.innerText = "❌ Please enter a YouTube URL!";
+          status.innerText = "enter the full URL https://";
           return;
         }
 
         try {
-          status.innerText = "⏳ one moment please...";
+          status.innerText = "⏳ Ringtones Arriving shortly...";
           const client = await import(
             "https://cdn.jsdelivr.net/npm/@gradio/client/+esm"
           ).then((m) => m.Client);
@@ -252,7 +252,7 @@
             iphoneLink.download = "iphone_ringtone.m4r";
             iphoneLink.style.display = "block";
           }
-          status.innerText = "JesseJesse.xyz";
+          status.innerText = "💥 JesseJesse.xyz";
           ringtoneContainer.classList.add("glow-border");
           incrementRingtoneCount();
         } catch (error) {
