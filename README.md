@@ -22,6 +22,22 @@ license: apache-2.0
 git clone https://huggingface.co/spaces/sudo-soldier/PYTR
 ```
 
+```
+cd PYTR
+```
+
+## Create and activate Python environment
+```
+python -m venv env
+source env/bin/activate
+```
+
+## Install dependencies and run
+```
+pip install -r requirements.txt
+python app.py
+```
+
 ## Embed the space
 ```
 <iframe 
