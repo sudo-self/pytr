@@ -107,19 +107,21 @@
       </p>
       <br />
       <div style="display: flex; gap: 8px">
-        <input
-          id="youtube-url"
-          type="text"
-          placeholder="Enter YouTube URL"
-          style="
-            flex-grow: 1;
-            padding: 8px;
-            border: 2px dashed #fbbf24;
-            border-radius: 4px;
-            background-color: #374151;
-            color: white;
-          "
-        />
+       <input
+  id="youtube-url"
+  type="text"
+  placeholder="Enter YouTube URL"
+  style="
+    flex-grow: 1;
+    padding: 8px;
+    border: 2px dashed #fbbf24;
+    border-radius: 4px;
+    background-color: #374151;
+    color: white;
+  "
+  onfocus="this.blur()"
+/>
+
         <button
           onclick="pasteClipboard()"
           style="
