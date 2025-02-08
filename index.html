@@ -1,133 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PYTR</title>
-  <meta name="title" content="Python YouTube Ringtones" />
-  <meta name="description" content="Generate custom ringtones from YouTube videos with one click! Python YouTube Ringtones lets you convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. No software required – fast, free, and online!" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://ringtones.jessejesse.xyz" />
-  <meta property="og:title" content="Python YouTube Ringtones" />
-  <meta property="og:description" content="Generate custom ringtones from YouTube videos with one click! Python YouTube Ringtones lets you convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. No software required – fast, free, and online!" />
-  <meta property="og:image" content="https://ringtones.jessejesse.xyz/og.png" />
-  <meta name="theme-color" content="#1a1a2e" />
-  <link rel="manifest" href="/manifest.json" />
-  <link rel="icon" href="/favicon.ico" sizes="16x16 32x32" />
-  <link rel="icon" href="/icon-192.png" sizes="192x192" />
-  <link rel="icon" href="/icon-512.png" sizes="512x512" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@gradio/client/+esm"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Python YouTube Ringtones</title>
+    <meta name="title" content="Python YouTube Ringtones" />
+    <meta
+      name="description"
+      content="Generate custom ringtones from YouTube videos with one click! Python YouTube Ringtones lets you convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. No software required – fast, free, and online!"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ringtones.jessejesse.xyz" />
+    <meta property="og:title" content="Python YouTube Ringtones" />
+    <meta
+      property="og:description"
+      content="Generate custom ringtones from YouTube videos with one click! Python YouTube Ringtones lets you convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. No software required – fast, free, and online!"
+    />
+    <meta
+      property="og:image"
+      content="https://ringtones.jessejesse.xyz/og.png"
+    />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://ringtones.jessejesse.xyz" />
+    <meta property="twitter:title" content="Python YouTube Ringtones" />
+    <meta
+      property="twitter:description"
+      content="Generate custom ringtones from YouTube videos with one click! Python YouTube Ringtones lets you convert YouTube audio into high-quality MP3 and iPhone ringtones in seconds. No software required – fast, free, and online!"
+    />
+    <meta
+      property="twitter:image"
+      content="https://ringtones.jessejesse.xyz/og.png"
+    />
+    <meta name="author" content="JesseJesse.xyz" />
 
-  <style>
-    body { background: linear-gradient(135deg, #1a1a2e, #111827); }
-    .soft-border { border: 2px solid #9ca3af; transition: border 0.3s ease-in-out; }
-    @keyframes glow { 0%, 100% { border-color: #4f46e5; } 50% { border-color: #fbbf24; } }
-    .glow-border { animation: glow 1.5s ease-in-out infinite; }
-  </style>
-</head>
-<body class="text-white flex flex-col justify-center items-center h-screen">
+    <style>
+      body {
+        background: linear-gradient(135deg, #1a1a2e, #111827, #0f0f14);
+        color: white;
+        visibility: hidden;
+      }
+    </style>
 
-  <div id="ringtone-container" class="w-full max-w-md bg-gray-800 soft-border rounded-lg p-6 text-center shadow-md">
-    <img src="icon.png" alt="App Icon" class="w-28 h-28 mx-auto mb-4">
-    <h1 class="text-xl font-bold">Python YouTube Ringtones</h1>
-    
-    <p class="mt-4 text-yellow-400">♪♬♪♬&nbsp;&nbsp;<span id="ringtone-count">0</span></p>
+    <script src="https://cdn.tailwindcss.com" type="0927a38f1935cf0754f340b2-text/javascript"></script>
 
-    <div class="flex gap-2 mt-4">
-      <input id="youtube-url" type="text" placeholder="Enter YouTube URL"
-        class="flex-grow p-2 border border-gray-600 rounded bg-gray-700 text-white">
-      <button onclick="pasteClipboard()" class="bg-gray-600 text-white p-2 rounded">✍</button>
+    <script type="0927a38f1935cf0754f340b2-text/javascript">
+      document.addEventListener("DOMContentLoaded", () => {
+        document.body.style.visibility = "visible";
+        updateRingtoneCount(); // Fetch count on page load
+        loadRingtones(); // Fetch the last 10 ringtones
+      });
+    </script>
+  </head>
+
+  <body
+    class="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white flex flex-col justify-center items-center h-screen"
+  >
+    <div
+      class="w-full max-w-md bg-transparent p-6 rounded-lg shadow-lg text-center"
+    >
+      <img src="icon.png" alt="App Icon" class="w-20 h-20 mx-auto mb-4" />
+      <h1 class="text-xl font-bold mb-4">Python YouTube Ringtones</h1>
+      <p class="mt-4 text-center text-yellow-400">
+        ♪♬♪♬&nbsp;tones made:&nbsp;<span id="ringtone-count">0</span>
+      </p>
+      <br />
+      <div class="flex gap-2">
+        <input
+          id="youtube-url"
+          type="text"
+          placeholder="Enter YouTube URL"
+          class="flex-1 p-2 border border-gray-700 rounded bg-gray-700 text-white"
+        />
+        <button onclick="if (!window.__cfRLUnblockHandlers) return false; pasteClipboard()" class="bg-gray-600 hover:bg-gray-500 px-3 py-2 rounded" data-cf-modified-0927a38f1935cf0754f340b2-="">
+          &#9998;
+        </button>
+      </div>
+
+      <input
+        id="mp3-upload"
+        type="file"
+        accept="audio/*"
+        class="w-full p-2 mt-4 border border-gray-700 rounded bg-gray-700 text-white"
+      />
+
+      <button onclick="if (!window.__cfRLUnblockHandlers) return false; processRingtone()" class="w-full bg-indigo-700 hover:bg-green-800 text-white py-2 px-4 rounded mt-4" data-cf-modified-0927a38f1935cf0754f340b2-="">
+        Generate Ringtones
+      </button>
+
+      <p id="status" class="text-center mt-4 text-yellow-400"></p>
+
+      <a
+        id="android-ringtone"
+        href="#"
+        download
+        class="hidden block mt-4 text-center text-indigo-500"
+        >⬇ Android Ringtone</a
+      >
+      <a
+        id="iphone-ringtone"
+        href="#"
+        download
+        class="hidden block mt-4 text-center text-indigo-500"
+        >⬇ iPhone Ringtone</a
+      >
+      
+      <!-- Dropdown for the last 10 ringtones -->
+      <div class="mt-4">
+        <label for="ringtone-dropdown" class="text-yellow-400">Select a Previous Ringtone:</label>
+        <select id="ringtone-dropdown" class="w-full p-2 mt-2 border border-gray-700 rounded bg-gray-700 text-white">
+          <!-- Options will be populated here -->
+        </select>
+      </div>
     </div>
 
-    <button id="create-btn" onclick="processRingtone()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded mt-4">
-      Create Ringtone
-    </button>
+    <footer class="mt-6 text-green-600 text-sm text-center cursor-pointer" onclick="if (!window.__cfRLUnblockHandlers) return false; sharePage()" data-cf-modified-0927a38f1935cf0754f340b2-="">
+      JesseJesse.xyz
+    </footer>
+    <br />
+    <span class="inline-block ml-2 text-sm text-center cursor-pointer"
+      >&#9757;&nbsp;share</span
+    >
 
-    <p id="status" class="text-yellow-400 mt-4"></p>
+    <script type="0927a38f1935cf0754f340b2-text/javascript">
+      const REDIS_URL = "https://amused-walleye-31373.upstash.io";
+      const REDIS_TOKEN =
+        "AXqNASQgMWZmMTdjYTEtNTJjYi00MDczLWJmZDctNjFjZGUyOTA0ZjEyNjcyMTI0NDM2MDBjNDVmZmE5NjJlMTllYTkyMDI2MDU=";
 
-    <a id="android-ringtone" href="#" download="android_ringtone.mp3"
-      class="hidden mt-4 text-green-400 underline">⬇ Android Ringtone</a>
-
-    <a id="iphone-ringtone" href="#" download="iphone_ringtone.m4r"
-      class="hidden mt-2 text-blue-400 underline">⬇ iPhone Ringtone</a>
-  </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      updateRingtoneCount();
-      document.getElementById("youtube-url").focus();
-    });
-
-    async function updateRingtoneCount() {
-      try {
-        const response = await fetch("/api/get-ringtone-count");
-        const data = await response.json();
-        document.getElementById("ringtone-count").innerText = data.count || 0;
-      } catch (error) {
-        console.error("Error fetching ringtone count:", error);
-      }
-    }
-
-    async function processRingtone() {
-      const urlInput = document.getElementById("youtube-url");
-      const androidLink = document.getElementById("android-ringtone");
-      const iphoneLink = document.getElementById("iphone-ringtone");
-      const status = document.getElementById("status");
-      const container = document.getElementById("ringtone-container");
-      const button = document.getElementById("create-btn");
-
-      if (!urlInput.value.trim()) {
-        status.innerText = "❌ Please enter a YouTube URL!";
-        return;
-      }
-
-      button.disabled = true;
-      status.innerText = "⏳ Processing...";
-      container.classList.add("glow-border");
-
-      try {
-        const { Client } = await import("https://cdn.jsdelivr.net/npm/@gradio/client/+esm");
-        const client = await Client.connect("sudo-soldier/PYTR");
-        const result = await client.predict("/predict", [urlInput.value]);
-
-        if (result && result.length >= 2) {
-          androidLink.href = result[0];
-          androidLink.style.display = "block";
-          iphoneLink.href = result[1];
-          iphoneLink.style.display = "block";
-          status.innerText = "✅ Ringtone ready!";
-          urlInput.value = "";
-          incrementRingtoneCount();
-        } else {
-          status.innerText = "❌ Failed to generate ringtone.";
+      async function updateRingtoneCount() {
+        try {
+          const response = await fetch(`${REDIS_URL}/get/ringtone_count`, {
+            headers: { Authorization: `Bearer ${REDIS_TOKEN}` },
+          });
+          const data = await response.json();
+          document.getElementById("ringtone-count").innerText =
+            data.result || 0;
+        } catch (error) {
+          console.error("Error fetching ringtone count:", error);
         }
-      } catch (error) {
-        console.error(error);
-        status.innerText = "❌ Error processing ringtone.";
-      } finally {
-        container.classList.remove("glow-border");
-        button.disabled = false;
       }
-    }
 
-    async function incrementRingtoneCount() {
-      try {
-        await fetch("/api/increment-ringtone-count");
-        updateRingtoneCount();
-      } catch (error) {
-        console.error("Error updating count:", error);
+      async function incrementRingtoneCount() {
+        try {
+          await fetch(`${REDIS_URL}/incr/ringtone_count`, {
+            headers: { Authorization: `Bearer ${REDIS_TOKEN}` },
+          });
+          updateRingtoneCount(); //count
+        } catch (error) {
+          console.error("Error updating ringtone count:", error);
+        }
       }
-    }
 
-    function pasteClipboard() {
-      navigator.clipboard.readText().then(text => {
-        document.getElementById("youtube-url").value = text;
-      }).catch(err => console.error("Failed to read clipboard", err));
-    }
-  </script>
+      async function loadRingtones() {
+        try {
+          const response = await fetch(`${REDIS_URL}/lrange/last_ringtones 0 10`, {
+            headers: { Authorization: `Bearer ${REDIS_TOKEN}` },
+          });
+          const data = await response.json();
+          const dropdown = document.getElementById("ringtone-dropdown");
 
-</body>
+          if (data.result && data.result.length > 0) {
+            data.result.forEach((ringtone) => {
+              const option = document.createElement("option");
+              option.value = ringtone;
+              option.textContent = ringtone.split("/").pop().replace(/_/g, " ");
+              dropdown.appendChild(option);
+            });
+          } else {
+            const option = document.createElement("option");
+            option.value = "";
+            option.textContent = "No recent ringtones available";
+            dropdown.appendChild(option);
+          }
+        } catch (error) {
+          console.error("Error loading ringtones:", error);
+        }
+      }
+
+      async function processRingtone() {
+        const urlInput = document.getElementById("youtube-url").value;
+        const fileInput = document.getElementById("mp3-upload").files[0];
+        const androidLink = document.getElementById("android-ringtone");
+        const iphoneLink = document.getElementById("iphone-ringtone");
+        const status = document.getElementById("status");
+
+        if (!urlInput && !fileInput) {
+          status.innerText =
+            "❌ Please enter a YouTube URL or upload an MP3 file!";
+          return;
+        }
+
+        try {
+          status.innerText = "⏳ one moment please...";
+          const client = await import(
+            "https://cdn.jsdelivr.net/npm/@gradio/client/+esm"
+          ).then((m) => m.Client);
+          const connectedClient = await client.connect("sudo-soldier/PYTR");
+
+          const inputData = {
+            url: urlInput || "Hello!!",
+            uploaded_file: fileInput || null,
+          };
+          const result = await connectedClient.predict(
+            "/process_youtube_url",
+            inputData,
+          );
+
+          const androidFile = result.data[0]?.url || result.data[0]?.path;
+          const iphoneFile = result.data[1]?.url || result.data[1]?.path;
+
+          if (androidFile) {
+            androidLink.href = androidFile;
+            androidLink.download = "android_ringtone.mp3";
+            androidLink.style.display = "block";
+          }
+
+          if (iphoneFile) {
+            iphoneLink.href = iphoneFile;
+            iphoneLink.download = "iphone_ringtone.m4r";
+            iphoneLink.style.display = "block";
+          }
+
+          status.innerText = "Ringtones Ready!";
+          incrementRingtoneCount(); //count
+        } catch (error) {
+          console.error(error);
+          status.innerText = "Error processing request!";
+        }
+      }
+
+      async function pasteClipboard() {
+        try {
+          const text = await navigator.clipboard.readText();
+          document.getElementById("youtube-url").value = text;
+        } catch (error) {
+          alert("Clipboard access denied! Please paste manually.");
+        }
+      }
+
+      function sharePage() {
+        if (navigator.share) {
+          navigator
+            .share({
+              title: "ringtones.JesseJesse.xyz",
+              url: window.location.href,
+            })
+            .catch((error) => console.log("Sharing failed:", error));
+        } else {
+          alert("Share API not supported in this browser.");
+        }
+      }
+    </script>
+  </body>
 </html>
 
 
