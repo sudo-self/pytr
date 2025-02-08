@@ -225,7 +225,7 @@ async function processRingtone() {
   }
 
   try {
-    status.innerText = "⏳ Gradio API Activated";
+    status.innerText = "⏳ Just a moment...";
     const client = await import(
       "https://cdn.jsdelivr.net/npm/@gradio/client/+esm"
     ).then((m) => m.Client);
@@ -254,7 +254,7 @@ async function processRingtone() {
       iphoneLink.style.display = "block";
     }
 
-    status.innerText = "Download";
+    status.innerText = "Downloads";
     ringtoneContainer.classList.add("glow-border");
     incrementRingtoneCount();
   } catch (error) {
