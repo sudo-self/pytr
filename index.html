@@ -87,7 +87,7 @@
         width: 100%;
         max-width: 400px;
         background: transparent;
-        border: 2px solid transparent;
+        border: 2px solid grey;
         border-radius: 8px;
         padding: 24px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -216,7 +216,7 @@
         }
 
         try {
-          status.innerText = "⏳ YouTube side door...";
+          status.innerText = "⏳ one moment please...";
           const client = await import(
             "https://cdn.jsdelivr.net/npm/@gradio/client/+esm"
           ).then((m) => m.Client);
