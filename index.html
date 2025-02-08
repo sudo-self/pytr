@@ -212,52 +212,57 @@
         }
       }
 
-      async function processRingtone() {
-        const urlInput = document.getElementById("youtube-url").value;
-        const androidLink = document.getElementById("android-ringtone");
-        const iphoneLink = document.getElementById("iphone-ringtone");
-        const status = document.getElementById("status");
-        const ringtoneContainer = document.getElementById("ringtone-container");
+async function processRingtone() {
+  const urlInput = document.getElementById("youtube-url").value;
+  const androidLink = document.getElementById("android-ringtone");
+  const iphoneLink = document.getElementById("iphone-ringtone");
+  const status = document.getElementById("status");
+  const ringtoneContainer = document.getElementById("ringtone-container");
 
-        if (!urlInput) {
-          status.innerText = "enter the full URL https://";
-          return;
-        }
+  if (!urlInput) {
+    status.innerText = "enter the full URL https://";
+    return;
+  }
 
-        try {
-          status.innerText = "⏳ Ringtones on the way...";
-          const client = await import(
-            "https://cdn.jsdelivr.net/npm/@gradio/client/+esm"
-          ).then((m) => m.Client);
-          const connectedClient = await client.connect("sudo-soldier/PYTR");
-          const result = await connectedClient.predict(
-            "/process_youtube_or_audio",
-            {
-              url: urlInput,
-              recorded_audio: null,
-            },
-          );
-          const androidFile = result.data[0]?.url || result.data[0]?.path;
-          const iphoneFile = result.data[1]?.url || result.data[1]?.path;
+  try {
+    status.innerText = "⏳ Ringtones on the way...";
+    const client = await import(
+      "https://cdn.jsdelivr.net/npm/@gradio/client/+esm"
+    ).then((m) => m.Client);
+    const connectedClient = await client.connect("sudo-soldier/PYTR");
+    const result = await connectedClient.predict(
+      "/process_youtube_or_audio",
+      {
+        url: urlInput,
+        recorded_audio: null,
+      },
+    );
+    const androidFile = result.data[0]?.url || result.data[0]?.path;
+    const iphoneFile = result.data[1]?.url || result.data[1]?.path;
 
-          if (androidFile) {
-            androidLink.href = androidFile;
-            androidLink.download = "android_ringtone.mp3";
-            androidLink.style.display = "block";
-          }
-          if (iphoneFile) {
-            iphoneLink.href = iphoneFile;
-            iphoneLink.download = "iphone_ringtone.m4r";
-            iphoneLink.style.display = "block";
-          }
-          status.innerText = "♪♬♪♬♪♬♪♬";
-          ringtoneContainer.classList.add("glow-border");
-          incrementRingtoneCount();
-        } catch (error) {
-          console.error(error);
-          status.innerText = "Error processing request!";
-        }
-      }
+
+    if (androidFile) {
+      androidLink.href = androidFile;
+      androidLink.download = "android_ringtone.mp3";
+      androidLink.style.display = "block";
+    }
+    
+ 
+    if (iphoneFile) {
+      iphoneLink.href = iphoneFile;
+      iphoneLink.download = "iphone_ringtone.m4r"; 
+      iphoneLink.style.display = "block";
+    }
+
+    status.innerText = "♪♬♪♬♪♬♪♬";
+    ringtoneContainer.classList.add("glow-border");
+    incrementRingtoneCount();
+  } catch (error) {
+    console.error(error);
+    status.innerText = "Error processing request!";
+  }
+}
+
 
       async function pasteClipboard() {
         try {
