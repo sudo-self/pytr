@@ -171,7 +171,7 @@
         style="
           display: none;
           margin-top: 16px;
-          color: #3b82f6;
+          color: #007db6;
           text-decoration: none;
         "
         ><i class="fab fa-apple" style="font-size: 24px; color: #000;"></i>&nbsp;iPhone Ringtone</a
@@ -225,7 +225,7 @@ async function processRingtone() {
   }
 
   try {
-    status.innerText = "⏳ Ringtones on the way...";
+    status.innerText = "⏳ Gradio API Activated";
     const client = await import(
       "https://cdn.jsdelivr.net/npm/@gradio/client/+esm"
     ).then((m) => m.Client);
@@ -254,7 +254,7 @@ async function processRingtone() {
       iphoneLink.style.display = "block";
     }
 
-    status.innerText = "♪♬♪♬♪♬♪♬";
+    status.innerText = "Download";
     ringtoneContainer.classList.add("glow-border");
     incrementRingtoneCount();
   } catch (error) {
