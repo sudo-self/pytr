@@ -220,7 +220,7 @@ async function processRingtone() {
   const ringtoneContainer = document.getElementById("ringtone-container");
 
   if (!urlInput) {
-    status.innerText = "enter the full URL https://";
+    status.innerText = "Please enter a valid YouTube URL.";
     return;
   }
 
@@ -230,16 +230,18 @@ async function processRingtone() {
       "https://cdn.jsdelivr.net/npm/@gradio/client/+esm"
     ).then((m) => m.Client);
     const connectedClient = await client.connect("sudo-soldier/PYTR");
+    
+  
     const result = await connectedClient.predict(
       "/process_youtube_or_audio",
       {
-        url: urlInput,
-        recorded_audio: null,
-      },
+        url: urlInput, 
+        uploaded_audio: null, 
+      }
     );
+    
     const androidFile = result.data[0]?.url || result.data[0]?.path;
     const iphoneFile = result.data[1]?.url || result.data[1]?.path;
-
 
     if (androidFile) {
       androidLink.href = androidFile;
@@ -247,21 +249,21 @@ async function processRingtone() {
       androidLink.style.display = "block";
     }
     
- 
     if (iphoneFile) {
       iphoneLink.href = iphoneFile;
       iphoneLink.download = "iphone_ringtone.m4r"; 
       iphoneLink.style.display = "block";
     }
 
-    status.innerText = "Downloads";
+    status.innerText = "Ringtone ready for download!";
     ringtoneContainer.classList.add("glow-border");
     incrementRingtoneCount();
   } catch (error) {
     console.error(error);
-    status.innerText = "Error processing request!";
+    status.innerText = "Error processing the request!";
   }
 }
+
 
 
       async function pasteClipboard() {
