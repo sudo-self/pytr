@@ -86,49 +86,55 @@
       }
 
       async function processRingtone() {
-        const urlInput = document.getElementById("youtube-url").value;
-        const androidLink = document.getElementById("android-ringtone");
-        const iphoneLink = document.getElementById("iphone-ringtone");
-        const status = document.getElementById("status");
-        const ringtoneContainer = document.getElementById("ringtone-container");
+  const urlInput = document.getElementById("youtube-url").value;
+  const androidLink = document.getElementById("android-ringtone");
+  const iphoneLink = document.getElementById("iphone-ringtone");
+  const status = document.getElementById("status");
+  const ringtoneContainer = document.getElementById("ringtone-container");
 
-        if (!urlInput) {
-          status.innerText = "Please enter a valid YouTube URL.";
-          return;
-        }
+  if (!urlInput) {
+    status.innerText = "Please enter a valid YouTube URL.";
+    return;
+  }
 
-        try {
-          status.innerText = "⏳ Just a moment...";
-          const client = await import("https://cdn.jsdelivr.net/npm/@gradio/client/+esm").then((m) => m.Client);
-          const connectedClient = await client.connect("sudo-soldier/PYTR");
+  try {
+    status.innerText = "⏳ Just a moment...";
+    const client = await import("https://cdn.jsdelivr.net/npm/@gradio/client/+esm").then((m) => m.Client);
+    const connectedClient = await client.connect("sudo-soldier/PYTR");
 
-          const result = await connectedClient.predict("/process_youtube_or_audio", {
-            url: urlInput,
-          });
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("Connection timed out!")), 36000)
+    );
 
-          const androidFile = result.data[0]?.url || result.data[0]?.path;
-          const iphoneFile = result.data[1]?.url || result.data[1]?.path;
 
-          if (androidFile) {
-            androidLink.href = androidFile;
-            androidLink.download = "android_ringtone.mp3";
-            androidLink.style.display = "block";
-          }
+    const result = await Promise.race([
+      connectedClient.predict("/process_youtube_or_audio", { url: urlInput }),
+      timeoutPromise,
+    ]);
 
-          if (iphoneFile) {
-            iphoneLink.href = iphoneFile;
-            iphoneLink.download = "iphone_ringtone.m4r"; 
-            iphoneLink.style.display = "block";
-          }
+    const androidFile = result.data[0]?.url || result.data[0]?.path;
+    const iphoneFile = result.data[1]?.url || result.data[1]?.path;
 
-          status.innerText = "Ringtone ready for download!";
-          ringtoneContainer.classList.add("glow-border");
-          incrementRingtoneCount();
-        } catch (error) {
-          console.error(error);
-          status.innerText = "Error processing the request!";
-        }
-      }
+    if (androidFile) {
+      androidLink.href = androidFile;
+      androidLink.download = "android_ringtone.mp3";
+      androidLink.style.display = "block";
+    }
+
+    if (iphoneFile) {
+      iphoneLink.href = iphoneFile;
+      iphoneLink.download = "iphone_ringtone.m4r";
+      iphoneLink.style.display = "block";
+    }
+
+    status.innerText = "Ringtone ready for download!";
+    ringtoneContainer.classList.add("glow-border");
+    incrementRingtoneCount();
+  } catch (error) {
+    console.error("Error processing ringtone:", error);
+    status.innerText = `Error: ${error.message || "An unexpected error occurred!"}`;
+  }
+}
 
       async function pasteClipboard() {
         try {
