@@ -62,111 +62,95 @@
       <a href="https://sudo-soldier-pytr.hf.space" target="_blank" rel="noopener noreferrer">on huggingface.co</a>
     </footer>
 
-    <script>
-      const REDIS_URL = "https://amused-walleye-31373.upstash.io";
-      const REDIS_TOKEN = "AXqNASQgMWZmMTdjYTEtNTJjYi00MDczLWJmZDctNjFjZGUyOTA0ZjEyNjcyMTI0NDM2MDBjNDVmZmE5NjJlMTllYTkyMDI2MDU=";
+  <script>
+    const REDIS_URL = "https://amused-walleye-31373.upstash.io";
+    const REDIS_TOKEN = "AXqNASQgMWZmMTdjYTEtNTJjYi00MDczLWJmZDctNjFjZGUyOTA0ZjEyNjcyMTI0NDM2MDBjNDVmZmE5NjJlMTllYTkyMDI2MDU=";
 
-      async function updateRingtoneCount() {
-        try {
-          const response = await fetch(`${REDIS_URL}/get/ringtone_count`, { headers: { Authorization: `Bearer ${REDIS_TOKEN}` } });
-          const data = await response.json();
-          document.getElementById("ringtone-count").innerText = data.result || 0;
-        } catch (error) {
-          console.error("Error fetching ringtone count:", error);
-        }
+    // Update ringtone count from Redis
+    async function updateRingtoneCount() {
+      try {
+        const response = await fetch(`${REDIS_URL}/get/ringtone_count`, { headers: { Authorization: `Bearer ${REDIS_TOKEN}` } });
+        const data = await response.json();
+        document.getElementById("ringtone-count").innerText = data.result || 0;
+      } catch (error) {
+        console.error("Error fetching ringtone count:", error);
       }
-
-      async function incrementRingtoneCount() {
-        try {
-          await fetch(`${REDIS_URL}/incr/ringtone_count`, { headers: { Authorization: `Bearer ${REDIS_TOKEN}` } });
-          updateRingtoneCount();
-        } catch (error) {
-          console.error("Error updating ringtone count:", error);
-        }
-      }
-
-      async function processRingtone() {
-  const urlInput = document.getElementById("youtube-url").value;
-  const androidLink = document.getElementById("android-ringtone");
-  const iphoneLink = document.getElementById("iphone-ringtone");
-  const status = document.getElementById("status");
-  const ringtoneContainer = document.getElementById("ringtone-container");
-
-  if (!urlInput) {
-    status.innerText = "Please enter a valid YouTube URL.";
-    return;
-  }
-
-  try {
-    status.innerText = "⏳ Just a moment...";
-    const client = await import("https://cdn.jsdelivr.net/npm/@gradio/client/+esm").then((m) => m.Client);
-    const connectedClient = await client.connect("sudo-soldier/PYTR");
-
-    const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("Connection timed out!")), 36000)
-    );
-
-
-    const result = await Promise.race([
-      connectedClient.predict("/process_youtube_or_audio", { url: urlInput }),
-      timeoutPromise,
-    ]);
-
-    const androidFile = result.data[0]?.url || result.data[0]?.path;
-    const iphoneFile = result.data[1]?.url || result.data[1]?.path;
-
-    if (androidFile) {
-      androidLink.href = androidFile;
-      androidLink.download = "android_ringtone.mp3";
-      androidLink.style.display = "block";
     }
 
-    if (iphoneFile) {
-      iphoneLink.href = iphoneFile;
-      iphoneLink.download = "iphone_ringtone.m4r";
-      iphoneLink.style.display = "block";
+    // Increment the ringtone count in Redis
+    async function incrementRingtoneCount() {
+      try {
+        await fetch(`${REDIS_URL}/incr/ringtone_count`, { headers: { Authorization: `Bearer ${REDIS_TOKEN}` } });
+        updateRingtoneCount();
+      } catch (error) {
+        console.error("Error updating ringtone count:", error);
+      }
     }
 
-    status.innerText = "Ringtone ready for download!";
-    ringtoneContainer.classList.add("glow-border");
-    incrementRingtoneCount();
-  } catch (error) {
-    console.error("Error processing ringtone:", error);
-    status.innerText = `Error: ${error.message || "An unexpected error occurred!"}`;
-  }
-}
+    // Function to process ringtone creation
+    async function processRingtone() {
+      const urlInput = document.getElementById("youtube-url").value;
+      const androidLink = document.getElementById("android-ringtone");
+      const iphoneLink = document.getElementById("iphone-ringtone");
+      const status = document.getElementById("status");
+      const ringtoneContainer = document.getElementById("ringtone-container");
 
-      async function pasteClipboard() {
-        try {
-          const text = await navigator.clipboard.readText();
-          document.getElementById("youtube-url").value = text;
-        } catch (error) {
-          console.error("Failed to read clipboard:", error);
-        }
+      if (!urlInput) {
+        status.innerText = "Please enter a valid YouTube URL.";
+        return;
       }
 
-      updateRingtoneCount();
-    </script>
-  </body>
+      try {
+        status.innerText = "⏳ Just a moment...";
+
+        const client = await import("https://cdn.jsdelivr.net/npm/@gradio/client/+esm").then((m) => m.Client);
+        const connectedClient = await client.connect("sudo-soldier/PYTR");
+
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error("Connection timed out!")), 36000)
+        );
+
+        const result = await Promise.race([
+          connectedClient.predict("/process_youtube_or_audio", { url: urlInput, start_time: 0, end_time: 20 }),
+          timeoutPromise,
+        ]);
+
+        const androidFile = result?.data?.[0]?.url || result?.data?.[0]?.path;
+        const iphoneFile = result?.data?.[1]?.url || result?.data?.[1]?.path;
+
+        if (androidFile) {
+          androidLink.href = androidFile;
+          androidLink.download = "android_ringtone.mp3";
+          androidLink.style.display = "block";
+        }
+
+        if (iphoneFile) {
+          iphoneLink.href = iphoneFile;
+          iphoneLink.download = "iphone_ringtone.m4r";
+          iphoneLink.style.display = "block";
+        }
+
+        status.innerText = "Ringtone ready for download!";
+        ringtoneContainer.classList.add("glow-border");
+        incrementRingtoneCount();
+      } catch (error) {
+        console.error("Error processing ringtone:", error);
+        status.innerText = `Error: ${error.message || "An unexpected error occurred!"}`;
+      }
+    }
+
+    // Function to paste clipboard content into the URL input
+    async function pasteClipboard() {
+      try {
+        const text = await navigator.clipboard.readText();
+        document.getElementById("youtube-url").value = text;
+      } catch (error) {
+        console.error("Failed to read clipboard:", error);
+      }
+    }
+
+    // Initial count fetch
+    updateRingtoneCount();
+  </script>
+</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
