@@ -110,8 +110,14 @@
           setTimeout(() => reject(new Error("Connection timed out!")), 36000)
         );
 
+        // Use the url and a placeholder for recorded_audio
         const result = await Promise.race([
-          connectedClient.predict("/process_youtube_or_audio", { url: urlInput, start_time: 0, end_time: 20 }),
+          connectedClient.predict("/process_youtube_or_audio", {
+            url: urlInput, 
+            recorded_audio: null, // Placeholder value
+            start_time: 0, 
+            end_time: 20
+          }),
           timeoutPromise,
         ]);
 
@@ -153,3 +159,4 @@
   </script>
 </body>
 </html>
+
