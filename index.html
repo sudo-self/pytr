@@ -125,38 +125,44 @@
         const iphoneFile = result?.data?.[1]?.url || result?.data?.[1]?.path;
 
         if (androidFile) {
+          console.log("Android file URL:", androidFile);  // Debug log
           androidLink.href = androidFile;
           androidLink.download = "android_ringtone.mp3";
           androidLink.style.display = "block";
+        } else {
+          console.log("No Android ringtone URL found.");
         }
 
         if (iphoneFile) {
+          console.log("iPhone file URL:", iphoneFile);  // Debug log
           iphoneLink.href = iphoneFile;
           iphoneLink.download = "iphone_ringtone.m4r";
           iphoneLink.style.display = "block";
+        } else {
+          console.log("No iPhone ringtone URL found.");
         }
 
         status.innerText = "Ringtone ready for download!";
         ringtoneContainer.classList.add("glow-border");
         incrementRingtoneCount();
       } catch (error) {
+        status.innerText = `Error: ${error.message}`;
         console.error("Error processing ringtone:", error);
-        status.innerText = `Error: ${error.message || "An unexpected error occurred!"}`;
       }
     }
 
-    async function pasteClipboard() {
-      try {
-        const text = await navigator.clipboard.readText();
+    function pasteClipboard() {
+      navigator.clipboard.readText().then((text) => {
         document.getElementById("youtube-url").value = text;
-      } catch (error) {
-        console.error("Failed to read clipboard:", error);
-      }
+      }).catch(err => {
+        console.error("Error reading clipboard:", err);
+      });
     }
 
-    // Initial count update on page load
-    updateRingtoneCount();
+    // Update count on page load
+    window.onload = updateRingtoneCount;
   </script>
 </body>
 </html>
+
 
